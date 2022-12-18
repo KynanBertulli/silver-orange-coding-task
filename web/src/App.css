@@ -1,38 +1,88 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h4 {
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+
+h3 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #101828;
+}
+
+#root {
+    margin: 0;
+    padding: 0;
+}
+
 .App {
-  text-align: center;
+    background-color: #282c34;
+    margin: 0;
+    text-align: center;
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.repo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 4px 32px 0 rgb(51 46 127 / 27%);
+    margin: 4% 45px;
+    border-radius: 25px;
+    border-bottom: 2px solid #fff;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.repo-desc {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 80% 20%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.fetch-btn {
+    width: 120px;
+    height: 35px;
+    border-radius: 0.35rem;
+    font-weight: 500;
+    background-color: #0e60fe;
+    color: #fff;
+    font-family: "Rubik";
+    font-size: 0.65rem;
+    margin: 20px 0;
+    border: none;
+    font-kerning: none;
+    box-shadow: none;
+    padding: 0;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    outline: inherit;
 }
 
-.App-link {
-  color: #61dafb;
+.repo-lan {
+    width: 92px;
+    height: 15px;
+    border-radius: 0.35rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-weight: 500;
+    background-color: #fe9e0e;
+    color: #fff;
+    font-family: "Rubik";
+    font-size: 0.65rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.repo-forks {
+    font-family: "Rubik";
+    font-size: 0.65rem;
+    color: #101828;
+    font-weight: 500;
 }

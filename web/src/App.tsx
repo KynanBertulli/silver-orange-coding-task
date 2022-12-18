@@ -1,25 +1,62 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 
 import './App.css';
 
 export function App() {
+  const [repos, setRepos] = useState<any[]>([]);
+
+  const fetchGitHub = () => {
+    console.log('hello!');
+    const url = 'http://localhost:4000/repos';
+    fetch(url, {
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        setRepos(json);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <h2>hello</h2>
+        <button className="fetch-btn" onClick={fetchGitHub}>
+          fetch github repos
+        </button>
+        <div className="sort-btns">
+          <button className="sort-btns">sort chrono</button>
+        </div>
+      </div>
+      {repos.map((repo) => {
+        return (
+          <div key={repo} className="repo-container">
+            <div className="title">
+              <h3>{repo.name}</h3>
+            </div>
+            <div className="repo-desc">
+              <p style={{ padding: '0 5%' }}>
+                {repo.description}
+                <br />
+                {repo.created_at}
+              </p>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <div className="repo-lan">{repo.language}</div>
+                <div className="repo-forks">fork count:{repo.forks}</div>
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

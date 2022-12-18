@@ -29,10 +29,10 @@ repos.get('/', async (_: Request, res: Response) => {
       .readFileSync(path.join(__dirname, '..', '..', 'data/repos.json'))
       .toString()
   );
-  file_data.push(JSON.parse(data));
+
+  file_data = file_data.concat(JSON.parse(data).data);
 
   file_data = file_data.filter((item: any) => item.fork === false);
-
   res.send(file_data);
 
   // TODO: See README.md Task (A). Return repo data here. You’ve got this!

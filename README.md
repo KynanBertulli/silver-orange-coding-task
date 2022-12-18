@@ -35,8 +35,8 @@ to leave this middleware in place to improve your implementation in (B).
 Using the provided React application in `/web`:
 
  1. Fetch repository data from the Express API created in (A).
- 2. Display a list of repositories. Include the repository name, description,
-    language, and forks count in the list.
+ 2. Display a list of repositories. Include the repository *name, *description,
+    *language, and *forks count in the list.
  3. The list of repositories should be displayed in reverse chronological order
     by creation date.
  4. Add buttons for each language type. Make clicking on a language button
