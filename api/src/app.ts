@@ -1,7 +1,7 @@
 import express, { Response, Request, NextFunction } from 'express';
 import cors from 'cors';
 import { repos } from './routes/repos';
-import { terrible } from './middleware/terrible';
+// import { terrible } from './middleware/terrible';
 import { AppError } from './models/AppError';
 
 // CORS header configuration
@@ -9,11 +9,15 @@ const corsOptions = {
   methods: 'GET',
   allowedHeaders: 'Content-Type,Authorization',
 };
-
+// var jsonParser = bodyParser.json();
 export const app = express();
 
+// allow json middleware to parse requests
+app.use(express.json());
+app.use(express.urlencoded());
+
 // Routes. Note these will fail about 25% due to "terrible" middleware.
-app.use('/repos', terrible(), cors(corsOptions), repos);
+app.use('/repos', cors(corsOptions), repos);
 
 // error handling middleware should be loaded after the loading the routes
 app.use('/', (err: Error, req: Request, res: Response, next: NextFunction) => {
