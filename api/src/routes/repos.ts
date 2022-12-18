@@ -1,11 +1,12 @@
 import { Router, Request, Response } from 'express';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import CircularJSON from 'circular-json';
+import fs from 'fs';
+import path from 'path';
 export const repos = Router();
 
 repos.get('/', async (_: Request, res: Response) => {
   res.header('Cache-Control', 'no-store');
-  // eslint-disable-next-line prefer-const
   let data: string = '';
   await new Promise<void>((resolve, reject) => {
     const url = 'https://api.github.com/users/silverorange/repos';
@@ -22,9 +23,17 @@ repos.get('/', async (_: Request, res: Response) => {
       });
   });
   res.status(200);
-  // console.log(JSON.parse(data));
-  res.send(data);
 
+  let file_data = JSON.parse(
+    fs
+      .readFileSync(path.join(__dirname, '..', '..', 'data/repos.json'))
+      .toString()
+  );
+  file_data.push(JSON.parse(data));
+
+  file_data = file_data.filter((item: any) => item.fork === false);
+
+  res.send(file_data);
 
   // TODO: See README.md Task (A). Return repo data here. You’ve got this!
 });
