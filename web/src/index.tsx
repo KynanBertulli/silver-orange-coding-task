@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { App } from './App';
+// import App from './App';
 import { reportWebVitals } from './reportWebVitals';
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Main from './Main';
+import Repo from './Repo';
 import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/repo/:id" element={<Repo />} />
+      </Routes>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

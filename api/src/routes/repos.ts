@@ -9,18 +9,22 @@ repos.get('/', async (_: Request, res: Response) => {
   res.header('Cache-Control', 'no-store');
   let data: string = '';
   await new Promise<void>((resolve, reject) => {
-    const url = 'https://api.github.com/users/silverorange/repos';
-    axios
-      .get(url)
-      .then((response) => {
-        res.status(200);
-        data = CircularJSON.stringify(response);
-        resolve();
-      })
-      .catch((error) => {
-        res.status(404);
-        reject();
-      });
+    try {
+      const url = 'https://api.github.com/users/silverorange/repos';
+      axios
+        .get(url)
+        .then((response) => {
+          res.status(200);
+          data = CircularJSON.stringify(response);
+          resolve();
+        })
+        .catch((error) => {
+          res.status(404);
+          reject();
+        });
+    } catch (e) {
+      console.log('error: ' + e);
+    }
   });
   res.status(200);
 

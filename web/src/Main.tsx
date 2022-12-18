@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import './App.css';
 import more_icon from './img/more-icon.svg';
 
-export function App() {
+export default function App() {
   const [toggles, setToggles] = useState([]);
   const [data, setData] = useState<any[]>([]);
   const [repos, setRepos] = useState<any[]>([]);
@@ -60,6 +60,9 @@ export function App() {
           .catch((error) => console.error(error));
         // test url:
         // https://raw.githubusercontent.com/KynanBertulli/silver-orange-coding-task/main/README.md
+        console.log(
+          `https://raw.githubusercontent.com/${item.full_name}/master/README.md`
+        );
         fetch(
           `https://raw.githubusercontent.com/${item.full_name}/master/README.md`
         )
@@ -77,6 +80,9 @@ export function App() {
     });
     setRepos(newRepos);
   };
+  const openMarkDown = (id: string) => {
+    window.location.href = `http://localhost:3000/repo/${id}`;
+  };
   return (
     <div className="App">
       <div>
@@ -84,9 +90,6 @@ export function App() {
         <button className="fetch-btn" onClick={fetchGitHub}>
           fetch github repos
         </button>
-        <div className="sort-btns">
-          <button className="sort-btns">sort chrono</button>
-        </div>
       </div>
       {repos.map((repo) => {
         return (
@@ -142,7 +145,17 @@ export function App() {
               <p>{repo.commit_author}</p>
               <p>{repo.commit_message}</p>
               <p>{repo.commit_date}</p>
-              <p>{repo.read_me}</p>
+              {/* <p>{repo.read_me}</p> */}
+              <Link
+                to={`/repo/${repo.id}`}
+                state={{
+                  data: JSON.stringify(
+                    repos.filter((item) => item.id === repo.id)
+                  ),
+                }}
+              >
+                <button className="fetch-btn">open markdown</button>
+              </Link>
             </div>
           </div>
         );

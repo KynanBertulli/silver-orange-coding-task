@@ -44,7 +44,7 @@ Using the provided React application in `/web`:
  5. - Make each repository in the list clickable.
  6. - When you click a repository, display the most recent commit date, author,
     and message.
- 6. If the repository has a `README.md` file, it will be located at
+ 6. - If the repository has a `README.md` file, it will be located at
     https://raw.githubusercontent.com/${repo.full_name}/master/README.md. In
     this case, also render the Markdown content when clicking on the repository.
  7. Include a way to return to the main list of repositories after you click on
