@@ -80,6 +80,10 @@ h3 {
     font-size: 0.65rem;
 }
 
+.repo-lan:hover {
+    cursor: pointer;
+}
+
 .repo-forks {
     font-family: "Rubik";
     font-size: 0.65rem;

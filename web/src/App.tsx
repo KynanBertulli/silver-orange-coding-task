@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './App.css';
 
 export function App() {
+  const [data, setData] = useState<any[]>([]);
   const [repos, setRepos] = useState<any[]>([]);
+
+  useEffect(() => {
+    const dataCopy = data;
+    setRepos(dataCopy);
+  }, [data]);
 
   const fetchGitHub = () => {
     console.log('hello!');
@@ -13,18 +19,22 @@ export function App() {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
-
         json.sort(function (a: any, b: any) {
           return (
             new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
           );
         });
-        setRepos(json);
+        setData(json);
       })
       .catch((err) => {
         console.error(err);
       });
+  };
+  const sortLan = (language: string) => {
+    console.log('sort language: ' + language);
+    const newRepos = data.filter((item) => item.language === language);
+    setRepos(newRepos);
+    console.log(newRepos);
   };
   return (
     <div className="App">
@@ -56,7 +66,14 @@ export function App() {
                   alignItems: 'center',
                 }}
               >
-                <div className="repo-lan">{repo.language}</div>
+                <div
+                  className="repo-lan"
+                  onClick={() => {
+                    sortLan(repo.language);
+                  }}
+                >
+                  {repo.language}
+                </div>
                 <div className="repo-forks">fork count:{repo.forks}</div>
               </div>
             </div>
