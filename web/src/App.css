@@ -90,3 +90,12 @@ h3 {
     color: #101828;
     font-weight: 500;
 }
+
+.more-info>img {
+    width: 25px;
+    height: 25px;
+}
+
+.more-info>img:hover {
+    cursor: pointer;
+}

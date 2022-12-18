@@ -1,13 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
 
 import './App.css';
+import more_icon from './img/more-icon.svg';
 
 export function App() {
+  const [toggles, setToggles] = useState([]);
   const [data, setData] = useState<any[]>([]);
   const [repos, setRepos] = useState<any[]>([]);
 
   useEffect(() => {
-    const dataCopy = data;
+    console.log(repos);
+  }, [repos]);
+
+  useEffect(() => {
+    const dataCopy = data.map((obj) => ({ ...obj, isToggled: false }));
     setRepos(dataCopy);
   }, [data]);
 
@@ -35,6 +43,18 @@ export function App() {
     const newRepos = data.filter((item) => item.language === language);
     setRepos(newRepos);
     console.log(newRepos);
+  };
+  const toggleRepo = (id: string) => {
+    let val;
+    const newRepos = repos.map((item) => {
+      const temp = Object.assign({}, item);
+      if (item.id === id) {
+        val = item.isToggled;
+        item.isToggled = !val;
+      }
+      return item;
+    });
+    setRepos(newRepos);
   };
   return (
     <div className="App">
@@ -76,6 +96,26 @@ export function App() {
                 </div>
                 <div className="repo-forks">fork count:{repo.forks}</div>
               </div>
+            </div>
+            <div
+              className={repo.isToggled ? 'more-info expanded' : 'more-info'}
+            >
+              <img
+                src={more_icon}
+                style={{
+                  transform: `rotate(${true ? '0deg' : '180deg'})`,
+                  height: 10,
+                }}
+                onClick={() => {
+                  toggleRepo(repo.id);
+                }}
+              />
+
+              <p style={{ color: 'black' }}>
+                {/* {repo.latestCommitDate} */}
+                {repo.author}
+                {/* {repo.message} */}
+              </p>
             </div>
           </div>
         );
