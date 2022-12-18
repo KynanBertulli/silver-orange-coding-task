@@ -14,6 +14,10 @@ export function App() {
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
+
+        json.sort(function (a: any, b: any) {
+          return a.created_at.localeCompare(b.created_at);
+        });
         setRepos(json);
       })
       .catch((err) => {
