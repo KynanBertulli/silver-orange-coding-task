@@ -11,10 +11,6 @@ export function App() {
   const [repos, setRepos] = useState<any[]>([]);
 
   useEffect(() => {
-    console.log(repos);
-  }, [repos]);
-
-  useEffect(() => {
     const dataCopy = data.map((obj) => ({ ...obj, isToggled: false }));
     setRepos(dataCopy);
   }, [data]);
@@ -51,15 +47,31 @@ export function App() {
       if (item.id === id) {
         val = item.isToggled;
         item.isToggled = !val;
-        if (item.isToggled) {
-          fetch(`https://api.github.com/repos/${item.full_name}/commits`)
-            .then((response) => response.json())
-            .then((commit) => {
-              const latestCommit = commit[0];
-              console.log(latestCommit.commit.message);
-            })
-            .catch((error) => console.error(error));
-        }
+        console.log(`https://api.github.com/repos/${item.full_name}/commits`);
+        fetch(`https://api.github.com/repos/${item.full_name}/commits`)
+          .then((response) => response.json())
+          .then((commit) => {
+            const latestCommit = commit[0];
+            console.log(latestCommit.commit.message);
+            item.commit_message = latestCommit.commit.message;
+            item.commit_author = latestCommit.commit.author.name;
+            item.commit_date = latestCommit.commit.author.date;
+          })
+          .catch((error) => console.error(error));
+        // test url:
+        // https://raw.githubusercontent.com/KynanBertulli/silver-orange-coding-task/main/README.md
+        fetch(
+          `https://raw.githubusercontent.com/${item.full_name}/master/README.md`
+        )
+          .then((response) => {
+            if (response.status === 200) {
+              return response.text();
+            }
+            return 'No ReadMe.md file found';
+          })
+          .then((readme) => {
+            item.read_me = readme;
+          });
       }
       return item;
     });
@@ -83,11 +95,18 @@ export function App() {
               <h3>{repo.name}</h3>
             </div>
             <div className="repo-desc">
-              <p style={{ padding: '0 5%' }}>
-                {repo.description}
-                <br />
-                {repo.created_at}
-              </p>
+              <div>
+                <p>{repo.description}</p>
+                <p
+                  style={{
+                    textAlign: 'left',
+                    margin: '0 15px',
+                    fontSize: '11px',
+                  }}
+                >
+                  {repo.created_at}
+                </p>
+              </div>
               <div
                 style={{
                   display: 'flex',
@@ -107,6 +126,7 @@ export function App() {
               </div>
             </div>
             <div
+              style={{ height: 20 }}
               className={repo.isToggled ? 'more-info expanded' : 'more-info'}
             >
               <img
@@ -119,12 +139,10 @@ export function App() {
                   toggleRepo(repo.id);
                 }}
               />
-
-              <p style={{ color: 'black' }}>
-                {/* {repo.latestCommitDate} */}
-                {repo.author}
-                {/* {repo.message} */}
-              </p>
+              <p>{repo.commit_author}</p>
+              <p>{repo.commit_message}</p>
+              <p>{repo.commit_date}</p>
+              <p>{repo.read_me}</p>
             </div>
           </div>
         );

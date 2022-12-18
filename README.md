@@ -34,15 +34,15 @@ to leave this middleware in place to improve your implementation in (B).
 
 Using the provided React application in `/web`:
 
- 1. Fetch repository data from the Express API created in (A).
- 2. Display a list of repositories. Include the repository *name, *description,
+ 1. -Fetch repository data from the Express API created in (A).
+ 2. -Display a list of repositories. Include the repository *name, *description,
     *language, and *forks count in the list.
- 3. The list of repositories should be displayed in reverse chronological order
+ 3. -The list of repositories should be displayed in reverse chronological order
     by creation date.
- 4. Add buttons for each language type. Make clicking on a language button
+ 4. -Add buttons for each language type. Make clicking on a language button
     filter the list by language type.
- 5. Make each repository in the list clickable.
- 6. When you click a repository, display the most recent commit date, author,
+ 5. - Make each repository in the list clickable.
+ 6. - When you click a repository, display the most recent commit date, author,
     and message.
  6. If the repository has a `README.md` file, it will be located at
     https://raw.githubusercontent.com/${repo.full_name}/master/README.md. In
