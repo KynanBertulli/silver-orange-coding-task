@@ -51,6 +51,15 @@ export function App() {
       if (item.id === id) {
         val = item.isToggled;
         item.isToggled = !val;
+        if (item.isToggled) {
+          fetch(`https://api.github.com/repos/${item.full_name}/commits`)
+            .then((response) => response.json())
+            .then((commit) => {
+              const latestCommit = commit[0];
+              console.log(latestCommit.commit.message);
+            })
+            .catch((error) => console.error(error));
+        }
       }
       return item;
     });
@@ -103,7 +112,7 @@ export function App() {
               <img
                 src={more_icon}
                 style={{
-                  transform: `rotate(${true ? '0deg' : '180deg'})`,
+                  transform: `rotate(${repo.isToggled ? '0deg' : '180deg'})`,
                   height: 10,
                 }}
                 onClick={() => {
