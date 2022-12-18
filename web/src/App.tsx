@@ -16,7 +16,9 @@ export function App() {
         console.log(json);
 
         json.sort(function (a: any, b: any) {
-          return a.created_at.localeCompare(b.created_at);
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
         });
         setRepos(json);
       })
@@ -37,7 +39,7 @@ export function App() {
       </div>
       {repos.map((repo) => {
         return (
-          <div key={repo} className="repo-container">
+          <div key={repo.id} className="repo-container">
             <div className="title">
               <h3>{repo.name}</h3>
             </div>
