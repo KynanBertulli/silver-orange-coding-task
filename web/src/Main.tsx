@@ -9,6 +9,7 @@ export default function App() {
   const [toggles, setToggles] = useState([]);
   const [data, setData] = useState<any[]>([]);
   const [repos, setRepos] = useState<any[]>([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const dataCopy = data.map((obj) => ({ ...obj, isToggled: false }));
@@ -32,6 +33,7 @@ export default function App() {
       })
       .catch((err) => {
         console.error(err);
+        setError('Error: Repo Request Failed. Try Again.');
       });
   };
   const sortLan = (language: string) => {
@@ -57,7 +59,10 @@ export default function App() {
             item.commit_author = latestCommit.commit.author.name;
             item.commit_date = latestCommit.commit.author.date;
           })
-          .catch((error) => console.error(error));
+          .catch((e) => {
+            setError('Error: Commit Request Failed');
+            console.error(e);
+          });
         // test url:
         // https://raw.githubusercontent.com/KynanBertulli/silver-orange-coding-task/main/README.md
         console.log(
@@ -80,17 +85,15 @@ export default function App() {
     });
     setRepos(newRepos);
   };
-  const openMarkDown = (id: string) => {
-    window.location.href = `http://localhost:3000/repo/${id}`;
-  };
   return (
     <div className="App">
       <div>
-        <h2>hello</h2>
+        <h2>hello github</h2>
         <button className="fetch-btn" onClick={fetchGitHub}>
           fetch github repos
         </button>
       </div>
+      <p style={{ color: 'red' }}>{error !== '' ? error : ''}</p>
       {repos.map((repo) => {
         return (
           <div key={repo.id} className="repo-container">
