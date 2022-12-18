@@ -63,8 +63,7 @@ export default function App() {
             setError('Error: Commit Request Failed');
             console.error(e);
           });
-        // test url:
-        // https://raw.githubusercontent.com/KynanBertulli/silver-orange-coding-task/main/README.md
+
         console.log(
           `https://raw.githubusercontent.com/${item.full_name}/master/README.md`
         );
